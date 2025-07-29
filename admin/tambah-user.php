@@ -2,8 +2,51 @@
 session_start();
 include 'koneksi.php';
 
-$query = mysqli_query($koneksi, "SELECT * FROM users ORDER BY id DESC");
-$rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
+// query edit
+$edit = isset($_GET['edit']) ? $_GET['edit'] : ''; //1,2,3
+$query    = mysqli_query($koneksi, "SELECT * FROM users WHERE id='$edit'");
+$rowEdit  = mysqli_fetch_assoc($query);
+
+// jika user memasukkan nilai input / nilai inputnya ada
+if (isset($_POST['name'])) {
+    try {
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        if ($_POST['password']) {
+            $password = $_POST['password'];
+        } else {
+            $password = $rowEdit['password'];
+        }
+
+        if ($edit) {
+            $update = mysqli_query($koneksi, "UPDATE users SET 
+            name='$name',
+            email='$email',
+            password='$password' WHERE id ='$edit'");
+            header("location:user.php?ubah=berhasil");
+        } else {
+            // masukkan data ke dalam table users (name, email, password)
+            // nilainya adalah nilai user yg input ('$name','$email','$password')
+            $insert = mysqli_query($koneksi, "INSERT INTO users (name, email, password) 
+            VALUES ('$name','$email','$password')");
+            if ($insert) {
+                header("location:user.php?tambah=berhasil");
+            }
+        }
+    } catch (\Exception $th) {
+        echo $th->getMessage();
+        die;
+    }
+}
+
+// delete area
+if (isset($_GET['delete'])) {
+    $delete = $_GET['delete']; //1,3
+    $delete = mysqli_query($koneksi, "DELETE FROM users WHERE id='$delete'");
+    header("location:user.php?hapus=berhasil");
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +95,9 @@ $rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Tambah Pengguna</h1>
+                    <h1 class="h3 mb-4 text-gray-800">
+                        <?= isset($_GET['edit']) ? "Edit" : "Tambah" ?> Pengguna
+                    </h1>
 
                     <div class="card">
                         <div class="card-body">
@@ -61,13 +106,13 @@ $rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                     <label for="" class="form-label">Nama</label>
                                     <input type="text"
                                         placeholder="Masukkan nama anda"
-                                        name="name" class="form-control">
+                                        name="name" class="form-control" value="<?= ($edit) ? $rowEdit['name'] : '' ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Email</label>
                                     <input type="email"
                                         placeholder="Masukkan email anda"
-                                        name="email" class="form-control">
+                                        name="email" class="form-control" value="<?= ($edit) ? $rowEdit['email'] : '' ?>">
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">Password</label>

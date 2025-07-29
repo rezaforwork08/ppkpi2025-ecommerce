@@ -59,6 +59,17 @@ $rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
                             <div align="right" class="mb-3">
                                 <a href="tambah-user.php" class="btn btn-primary">Tambah</a>
                             </div>
+                            <?php if (isset($_GET['hapus'])) { ?>
+                                <div class="alert alert-primary" role="alert">
+                                    Data berhasil dihapus
+                                </div>
+                            <?php } ?>
+                            <?php if (isset($_GET['tambah'])) { ?>
+                                <div class="alert alert-primary" role="alert">
+                                    Data berhasil ditambah
+                                </div>
+                            <?php } ?>
+
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -72,12 +83,14 @@ $rows  = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                     <?php $no = 1;
                                     foreach ($rows as $key => $row): ?>
                                         <tr>
-                                            <td><?php echo $key = +1 ?></td>
+                                            <td><?php echo $key + 1 ?></td>
                                             <td><?php echo $row['name'] ?></td>
                                             <td><?php echo $row['email'] ?></td>
                                             <td>
-                                                <a href="" class="btn btn-success btn-sm">Edit</a>
-                                                <a href="" class="btn btn-danger btn-sm">Hapus</a>
+                                                <a href="tambah-user.php?edit=<?php echo $row['id'] ?>" class="btn btn-success btn-sm">Edit</a>
+                                                <a href="tambah-user.php?delete=<?php echo $row['id'] ?>"
+                                                    onclick="return confirm('Apakah anda yakin??')"
+                                                    class="btn btn-danger btn-sm">Hapus</a>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>
