@@ -11,6 +11,7 @@ $rowEdit  = mysqli_fetch_assoc($query);
 if (isset($_POST['name'])) {
     try {
         $name = $_POST['name'];
+        $slug = str_replace(" ", "-", $_POST['name']);
         $email = $_POST['email'];
         if ($_POST['password']) {
             $password = $_POST['password'];
