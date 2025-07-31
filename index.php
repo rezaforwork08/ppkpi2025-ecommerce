@@ -1,3 +1,5 @@
+<?php
+include 'admin/koneksi.php'; ?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -25,9 +27,9 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -710,6 +712,41 @@
 
     <!-- Js Plugins -->
     <?php include 'inc/js.php' ?>
+
+    <script>
+        $('.add-to-cart').click(function(e) {
+            e.preventDefault();
+            let productId = $(this).data('id'),
+                productName = $(this).data("name"),
+                productPrice = $(this).data("price"),
+                productQty = $(this).data("qty");
+
+            $.ajax({
+                url: 'add_to_cart.php',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    'id': productId,
+                    'name': productName,
+                    'price': productPrice,
+                    'qty': parseInt(1),
+                },
+                success: function(res) {
+                    console.log(res);
+
+                    if (res.success == true) {
+                        alert(res.message);
+                        $('.total_item').text(res.total_items);
+                    } else {
+                        alert(res.message)
+                    }
+
+                }
+            });
+        });
+        // document.getElementsByClassName()
+        // document.querySelector('.add-to-cart');
+    </script>
 
 
 </body>

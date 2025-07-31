@@ -39,13 +39,13 @@
           <div class="row">
               <div class="col-lg-3">
                   <div class="header__logo">
-                      <a href="./index.html"><img src="fe/img/logo.png" alt=""></a>
+                      <a href="index.php"><img src="fe/img/logo.png" alt=""></a>
                   </div>
               </div>
               <div class="col-lg-6">
                   <nav class="header__menu">
                       <ul>
-                          <li class="active"><a href="./index.html">Home</a></li>
+                          <li class="active"><a href="index.php">Home</a></li>
                           <li><a href="./shop-grid.html">Shop</a></li>
                           <li><a href="#">Pages</a>
                               <ul class="header__menu__dropdown">
@@ -64,7 +64,7 @@
                   <div class="header__cart">
                       <ul>
                           <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                          <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                          <li><a href="#"><i class="fa fa-shopping-bag"></i> <span class="total_item">0</span></a></li>
                       </ul>
                       <div class="header__cart__price">item: <span>$150.00</span></div>
                   </div>
