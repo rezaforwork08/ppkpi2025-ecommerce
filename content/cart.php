@@ -18,11 +18,12 @@
                              <tbody>
                                  <?php
                                     $grandTotal = 0;
+                                    $subtotal   = 0;
                                     foreach ($_SESSION['cart'] as $key => $val):
                                         $subtotal = $val['product_price'] * $val['product_qty'];
                                         $grandTotal += $subtotal;
                                     ?>
-                                     <tr>
+                                     <tr class="item-row-<?php echo $key ?>">
                                          <td class="shoping__cart__item">
                                              <img src="fe/img/cart/cart-1.jpg" alt="">
                                              <h5><?php echo $val['product_name'] ?></h5>
@@ -44,7 +45,7 @@
                                                 ?>
                                          </td>
                                          <td class="shoping__cart__item__close">
-                                             <span class="icon_close"></span>
+                                             <span class="icon_close remove-cart" data-id="<?php echo $key ?>"></span>
                                          </td>
                                      </tr>
                                  <?php endforeach ?>
@@ -77,8 +78,9 @@
                      <div class="shoping__checkout">
                          <h5>Cart Total</h5>
                          <ul>
-                             <li>Subtotal <span><?php echo "Rp." .  number_format($subtotal) ?></span></li>
-                             <li>Total <span><?php echo "Rp." . $grandTotal ?></span></li>
+                             <li>Subtotal <span id="subtotal"><?php echo "Rp." .  number_format($subtotal) ?></span></li>
+                             <li>Total <span id="total"><?php echo "Rp." . $grandTotal ?></span></li>
+
                          </ul>
                          <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
                      </div>
@@ -87,4 +89,5 @@
          </div>
      </section>
  <?php endif ?>
+
  <!-- Shoping Cart Section End -->

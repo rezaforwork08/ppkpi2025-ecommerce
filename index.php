@@ -220,6 +220,33 @@ include 'admin/koneksi.php'; ?>
 
             });
 
+            $('.remove-cart').click(function(e) {
+                const id = $(this).data('id');
+                if (confirm('Apakah anda yakin akan menghapus produk ini??')) {
+                    $.ajax({
+                        url: "remove_cart.php",
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            id: id
+                        },
+                        success: function(res) {
+                            if (res.success) {
+                                $('.item-row-' + id).fadeOut(300, function() {
+                                    $(this).remove();
+                                    let formatted = new Intl.NumberFormat('id-ID').format(res.grand_total);
+                                    $('#subtotal').text(formatted);
+                                    $('#total').text(formatted);
+                                });
+
+                            } else {
+                                alert(res.message);
+                            }
+                        }
+                    });
+                }
+            });
+
             $('.add-to-cart').click(function(e) {
                 e.preventDefault();
                 let productId = $(this).data('id'),
